@@ -6,6 +6,8 @@ pad:
 
 gradle assemblePaPublic_Pad Éú³É°ü£ºE:\Android\PinganCor2\app\build\outputs\apk
 
+11
+
 
 
 
