@@ -10,7 +10,7 @@ gradle assemblePaPublic_Pad Éú³É°ü£ºE:\Android\PinganCor2\app\build\outputs\apk
 
 
 
-10,13
+10,13000000000
 
 
 
