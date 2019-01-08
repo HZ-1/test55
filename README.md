@@ -35,9 +35,9 @@ yarn dev
 并且把这个标签给删除：<base href="/">
 用webstorm打开时，请再根目录下，启动 yarn mock:server 服务
 
-
-https://github.com/AlanWei/react-boilerplate-pro
-https://github.com/AlanWei/react-sider
-https://github.com/AlanWei/react-acl-router
-https://github.com/AlanWei/react-intl-context
+以下是作者自己封装的框架
+- https://github.com/AlanWei/react-boilerplate-pro
+- https://github.com/AlanWei/react-sider
+- https://github.com/AlanWei/react-acl-router
+- https://github.com/AlanWei/react-intl-context
 
