@@ -1,0 +1,252 @@
+项目涉及知识点 在此文档。
+项目git 地址 https://github.com/AlanWei/react-boilerplate-pro
+
+项目架构：
+// src\index.js-1
+// src\app\index.js-2
+// index.js-1(ReactDOM.render)--index.js-2--createApp.js--router.js（这里包含所有的页面 action）
+//                                        --createStore.js（整合reducer,创建store,给初始值）--reducer
+
+
+react-boilerplate-pro-master\node_modules\history\createBrowserHistory.js
+这个文件是自定义的还是源码？
+
+关于根目录如何改变为：'./src'?
+babel 的一个插件实现的：
+ ["module-resolver", {
+      "root": ["./src"]
+    }],
+这样在文件中，使用
+import appAction from 'app/action'; 就可以指定为 './src/app/action';
+延伸，也可以使用别名：
+{
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+         "P":"./app/p"
+      }
+    }]
+  ]
+}
+请参考：https://blog.csdn.net/u011272795/article/details/78739207
+
+
+为什么http://127.0.0.1:8080/login 或 http://127.0.0.1:8080/ 可以都指向登录页面，
+这里是主要用到了react-acl-router 框架的配置 normalRoutes ：
+I:\11\react-boilerplate-pro-master\src\app\config\routes.js
+参见：
+const normalRoutes = [{
+     path: '/',
+     exact: true,
+     redirect: '/outlets',
+   }, {
+     path: '/login',
+     exact: true,
+     component: Login,
+   }];
+
+
+关于 登陆的action 与 reducer;
+登陆的action 最终在src\utils\createAsyncAction.js 中定义；
+reducers处理在 I:\11\react-boilerplate-pro-master\src\app\reducer.js 中
+所有有关登陆的redux，都通过 this.props.app获取
+
+
+关于项目中的reducer 和 action；
+每个功能的reducer分别在各自功能目录下；
+通过 src\app\init\reducers.js 把各个功能目录下的reducer集合一起；
+然后 src\app\init\createStore.js 在这里把以上reducers集成到store中；
+
+
+了解 如何 塞入cookie；
+了解 对象形式的 mapDispatchToProps；
+了解 withRouter
+
+json-server用法；
+
+
+登陆接口配置：
+I:\11\react-boilerplate-pro-master\middleware\loginMiddleware.js
+//登录接口为post请求的 ip地址为：http://localhost:3000/login ，data参数：{"username":"admin","password":"123"}
+json-server 默认是get请求，
+通过 json-server --middlewares 此命令可以定义post接口，并且根据条件返回不同数据
+
+其他接口配置数据在：I:\11\react-boilerplate-pro-master\db\db.json
+
+定义接口：
+以下两个文件用来定义接口：
+I:\11\react-boilerplate-pro-master\db\db.json  ---(/outlets 与 /notices 接口)
+I:\11\react-boilerplate-pro-master\middleware\loginMiddleware.js  ---(/login 登录接口)
+
+另外一个主意的是 \loginMiddleware.js 里面的打印出来的console.log是显示在dos命令窗口中，非页面控制台上。
+
+
+
+connected-react-router 4.3 与 redux 4.0 的配合使用，生成 store；
+以及使用 react-router-dom 提供 link withRouter
+这里history单独拎出来，并且使用connected-react-router主要原因是为了 让路由与redux同步，可以调试redux-devtools工具
+如果想用redux-tool调试工具，完全可以使用其他的react-router-dom 的BrowserRouter代替ConnectedRouter
+
+
+
+国际化使用了react 最新的16.X以上的版本的 React.createContext 的 Provider\Consumer属性实现
+实一种最新型的context改变，出发使用该context的组件render的技术。
+更多参考资料：https://www.cnblogs.com/qiqi105/p/8881097.html
+使用MultiIntlProvider包含顶层组件,注入React.createContext，
+使用injectIntl包含使用此context的子孙组件，
+那么顶层组件改变context时，被injectIntl包含的子孙组件，就会重新渲染render
+
+
+<Route> 自带三个 render method 和三个 props 。
+https://blog.csdn.net/sinat_17775997/article/details/69218382
+render methods 分别是：
+<Route component>
+<Route render>
+<Route children>
+一般行内的组件推荐使用render;
+每种 render method 都有不同的应用场景，同一个<Route> 应该只使用一种 render method ，大部分情况下你将使用 component 。
+props 分别是：
+match
+location
+history
+所有的 render method 无一例外都将被传入这些 props。
+
+用了一点import { matchRoutes } from 'react-router-config' 的matchRoutes ，
+关于matchRoutes，只当它是通过路由path，获取路由详细信息的一个辅助工具
+
+
+I:\11\react-boilerplate-pro-master\src\index.js ？？
+initClient 有什么用？
+
+slider源码中，renderMenu需要在map前加return；有一些类的内部函数，需要加bind；
+I:\11\react-boilerplate-pro-master\src\sider\Sider.jsx
+
+memoize:
+I:\11\react-boilerplate-pro-master\src\sider\Sider.jsx
+用来做缓存计算的，当有重复相同的计算时，直接取缓存数据。
+
+
+留意thunk 中异步请求的用法 比如[\src\views\outlets\index.js]中的异步dispatch
+还有对象形式写的dispatch：
+const mapDispatchToProps = {
+  getOutlets: () => (
+                createAsyncAction('OUTLETS_GET', () => (
+                  api.get('/outlets')
+                ))
+              ),
+};
+以及对象的写法，但没有dispatch [\src\views\outletDetail\index.js]：
+const mapDispatchToProps = ({
+  getOutlet: function (id) {
+      return createAsyncAction('OUTLETDETAIL_GET', () => (
+          api.get(`/outlets/${id}`)
+      ))
+  },
+  updateNotification: function(){
+    return {
+        type: 'APP_UPDATE_NOTIFICATION',
+        payload: notification,
+    }
+  }
+});
+
+
+关于 npm script:
+cross-env能跨平台地设置及使用环境变量
+https://www.cnblogs.com/yanze/p/7879631.html
+
+json-server用法见：
+https://github.com/typicode/json-server
+本项目中，运行起来后，可以在浏览器上可以直接http://127.0.0.1:3000/outlets 看到数据，db.json应该默认是get请求，
+所以在浏览器上可以直接访问。
+
+可通过api.delete(`/notices/${id}`) 来直接删除本地JSON中的数据，神奇！！！！
+见【I:\11\react-boilerplate-pro-master\src\layouts\BasicLayout.jsx】
+
+
+项目必须封装一层 axios 成公共的api.js，将一些基础参数设置给每个请求:
+const instance = axios.create({
+  baseURL: buildConfig.apiDomain,
+  timeout: 5000,
+  headers: defaultHeader,
+  withCredentials: true,
+});
+参考：I:\11\react-boilerplate-pro-master\src\utils\api.js
+
+
+reducer 与 creactStore 结合起来是很有特色的：
+其中注意的是 createReducer内的APP_LOGIN_SUCCESS就是case：APP_LOGIN_SUCCESS意思！！！！！
+这种方式非常棒，会减少很多不必的render，对性能好处颇多;
+const loginSuccess = (state, action) => ({...state,isLogin: true,user: action.payload,});
+const app = createReducer(defaultState, {
+           APP_LOGIN_SUCCESS: loginSuccess,
+           APP_UPDATE_NOTIFICATION: updateNotification,
+           APP_RESET_NOTIFICATION: resetNotification,
+         })
+const reducers = {app,outlets,outletDetail,}
+createStore(
+    connectRouter(history)(combineReducers(reducers)),
+    preloadedState,
+    composeEnhancers(applyMiddleware(...middlewares)),
+  )
+
+传统的reducer 与 creatStore 结合方式：
+const quotation = (state = [], action) => {
+  switch (action.type) {
+    case 'SET_HISACTIVE': return {}
+    default: return state;
+  }
+};
+const historyParams = (state = [], action) => {
+  switch (action.type) {
+    case 'SET_H': return {}
+    default: return state;
+  }
+};
+createStore(
+  combineReducers({ quotation , historyParams , hisHeadertoNav}),
+  applyMiddleware(thunk),
+)
+传统模式下，当有一个dispatch的时候，
+函数quotation、historyParams都会被触发执行，
+而且当其中一个quotation 的case被catch的时候，其他函数如historyParams的default将会被执行，只是他们都属于
+不同的this.props的属性罢了；
+另外有一个现象，传统模式下：
+在页面中，如果使用matchStateToProps，
+假如现在dispatch type:SET_HISACTIVE ,
+此将触发quotation的case SET_HISACTIVE 与 historyParams 的case default执行；
+页面A 使用了 this.props.quotation  因为quotation被执行，页面A将render;
+页面B 使用了 this.props.historyParams 因为historyParams被执行，页面B将render;
+以上就会产生一个问题，项目中任何dispatch，都会导致historyParams或quotation的case default执行；
+那么使用了对应mapStateToProps的必将被重绘render
+(当然了，如果default return的是一个固定数值如 return 5;则不会，因为比较到不变就不render，但如果是对象 如 reurn {}就会，因为一般情况都是对象，所以都会),所以会有很多性能问题；
+(使用了matchStateToProps的页面 何时会render 问题，都可以通过对应的reducer是否执行来决定；
+如果对应reducer执行，则render,否则反之)
+
+
+
+鉴权与cookie的结合使用：
+cookie与redux store 存储 this.props.igLogin 完成。
+1、每次浏览器中输入url后刷新页面时，以http://127.0.0.1:8089/outlets 为例说明：
+2、都会执行initClient.js，在这里做：检测若有cookie，则在根节点render之前，window.document.getElementById('app')之前，
+从cookie中获取登陆用户名和密码，进行登录操作的dispatch，从而在redux store中this.props.isLogin为true;
+3、outlets页面由鉴权容器BasicLayout.js包裹，
+4、当进入/outlets页面时，读取redux的store的 this.props.isLogin，
+如果为true，则正常进入页面；
+如果为false，则this.props.history.push('/login')
+
+上述第2步，检测若没有cookie；
+因为没有进行登录操作的dispatch,到达第4步的时候，因为this.props.isLogin为false，将转向登录页面；
+
+
+封装ajax的请求头--打造项目封装的ajax方法：
+I:\11\react-boilerplate-pro-master\src\utils\api.js
+
+
+
+
+
+
+
+

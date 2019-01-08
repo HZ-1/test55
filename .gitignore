@@ -1,1 +1,16 @@
-.idea/
+node_modules/
+build/
+stats/
+coverage/
+npm-debug.log
+yarn-error.log
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
+dist
+.idea
+.svn
