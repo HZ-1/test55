@@ -176,5 +176,8 @@ module.exports = {
     publicPath: '/',
     contentBase: SOURCE_DIR,
     historyApiFallback: true,
+    proxy: {
+      '/': 'http://localhost:4455'
+    }
   },
 };

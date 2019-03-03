@@ -32,7 +32,7 @@ export default class Home extends Component {
   _getAllMovies = () => {
     request(window.__LOADING__)({
       method: 'get',
-      url: `/api/v0/movies?type=${this.state.type || ''}&year=${this.state.year || ''}`
+      url: `http://127.0.0.1:4455/api/v0/movies?type=${this.state.type || ''}&year=${this.state.year || ''}`
     }).then(res => {
       this.setState({
         movies: res
@@ -41,6 +41,16 @@ export default class Home extends Component {
       this.setState({
         movies: []
       })
+    })
+
+
+    request(window.__LOADING__)({
+      method: 'get',
+      url: `/api/v0/movies?type=${this.state.type || ''}&year=${this.state.year || ''}`
+    }).then(res => {
+      console.log(res)
+    }).catch(() => {
+      console.log('error')
     })
   }
 
