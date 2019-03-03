@@ -6,12 +6,11 @@ import {
   Button
 } from 'antd'
 import { request } from '../../lib'
-import './login.sass'
+import './login.scss'
 
 const FormItem = Form.Item
 
-@Form.create()
-export default class Login extends Component {
+class Login extends Component {
   constructor (props) {
     super(props)
 
@@ -83,3 +82,7 @@ export default class Login extends Component {
     )
   }
 }
+
+
+
+export default Form.create()(Login)

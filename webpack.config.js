@@ -10,19 +10,18 @@ const buildConfig = require('./buildConfig');
 const ENV = process.env.NODE_ENV || 'development';
 //BUILD_DOMAIN 其实就是 localhost
 const BUILD_DOMAIN = process.env.BUILD_DOMAIN || 'localhost';
-const ASSET_PATH = process.env.ASSET_PATH || '/';
+// const ASSET_PATH = process.env.ASSET_PATH || '/';
 const VERSION = `v${pkg.version}`;
 const IS_PROD = ENV === 'production';
 
 
 
 
-const SOURCE_DIR = path.resolve(__dirname, 'src');
+const SOURCE_DIR = path.resolve(__dirname, 'films/src');
 const OUTPUT_DIR = path.resolve(__dirname, 'build');
 const CLIENT_DIR = path.join(OUTPUT_DIR, VERSION);
 
 const config = buildConfig[BUILD_DOMAIN];
-const localeMessages = require('./src/i18n/locale.json');
 
 module.exports = {
   mode: ENV,
@@ -33,7 +32,7 @@ module.exports = {
   },
   output: {
     path: CLIENT_DIR,
-    publicPath: ASSET_PATH,
+    // publicPath: ASSET_PATH,
     filename: 'assets/[name].[hash:8].js',
     libraryTarget: 'umd',
   },
@@ -154,21 +153,20 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV),
-      'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
+      // 'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
       'process.env.BUILD_CONFIG': JSON.stringify(config),
-      'process.env.BUILD_LOCALE_MESSAGES': JSON.stringify(localeMessages),
+      // 'process.env.BUILD_LOCALE_MESSAGES': JSON.stringify(localeMessages),
     }),
     new MiniCssExtractPlugin({
       filename: 'assets/css/style.[hash:8].css',
       chunkFilename: 'assets/css/[id].[hash:8].css',
     }),
-    new CopyWebpackPlugin([
-      { from: 'favicon.ico' },
-    ]),
+    // new CopyWebpackPlugin([
+    //   { from: 'favicon.ico' },
+    // ]),
     new HtmlWebpackPlugin({
       title: 'React App Pro',
-      filename: './index.html',
-      template: './index.ejs',
+      template: './index.html',
     }),
   ],
   devtool: IS_PROD ? 'source-map' : 'eval-source-map',

@@ -10,7 +10,7 @@ const rootElement = document.getElementById('app')
 
 render(
   <BrowserRouter>
-    <App />
+  <App />
   </BrowserRouter>,
   rootElement
 )

@@ -9,11 +9,20 @@
     "transform-class-properties",
     "transform-object-rest-spread",
     ["module-resolver", {
-      "root": ["./src"]
+      "root": ["./films"]
     }],
     ["import", {
       "libraryName": "antd",
       "libraryDirectory": "es"
-    }]
+    }],
+    [
+      "transform-runtime",
+      {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true,
+      "moduleName": "babel-runtime"
+      }
+      ]
   ]
 }
