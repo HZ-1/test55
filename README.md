@@ -1,13 +1,12 @@
 # react-boilerplate-pro
 
-Inspired by [Ant Design Pro](https://pro.ant.design/).
+本demo基于 [AlanWei 的 react-boilerplate-pro](https://github.com/AlanWei/react-boilerplate-pro)，感谢 AlanWei 贡献了一个如此好的企业级工程项目。
+此项目是接触react至今，见到过的最好的，最完整，最精简的企业级工程项目，没有之一。
+此项目为react的进阶乃至高阶运用，非常值得细看。
+项目的介绍和使用，点击原项目查看。
 
-Non-opinionated React Admin System boilerplate integrated with decentralized composable features.
+本demo的特色在于，在原项目的基础上，将原项目核心部分的 src-acl-router路由封装 、 国际化封装 src-intl-context 和 侧边栏sider 从node_module内拿出来 直接放到src中，让研究项目理解思想更加容易。能搞出这一波操作，真是不服自己都不行。
 
-## Features
-* :globe_with_meridians: **Internationalization**: [react-intl-context](https://github.com/AlanWei/react-intl-context)
-* :lock: **Access control list**: [react-acl-router](https://github.com/AlanWei/react-acl-router)
-* :memo: **Nested menu**: [react-sider](https://github.com/AlanWei/react-sider)
 
 ## Usage
 ```bash
@@ -21,19 +20,6 @@ $ yarn dev            # start webpack-dev-server in another terminal window at h
 ## Login Credentials
 * Admin: username `admin` & password `123`, authorities is `'admin'`
 * User: username `user` & password `123`, authorities is `'user'`
-
-## 启动：
-同时执行：
-```
-yarn mock:server
-yarn dev
-```
-## build 编译
-通过编译出来的文件，请加一个相对路径；这样就可以使用webstorm 启动起来了：
-例如： <link rel="preload" href="./assets/css/1.52e5b7e0.css"  as="style">
-原来是 <link rel="preload" href="assets/css/1.52e5b7e0.css"  as="style">
-并且把这个标签给删除：<base href="/">
-用webstorm打开时，请再根目录下，启动 yarn mock:server 服务
 
 以下是作者自己封装的框架
 - https://github.com/AlanWei/react-boilerplate-pro
