@@ -27,3 +27,5 @@ $ yarn dev            # start webpack-dev-server in another terminal window at h
 - https://github.com/AlanWei/react-acl-router
 - https://github.com/AlanWei/react-intl-context
 
+## 版本信息：
+版本号v1.1，在原项目基础上做了小bug修改，此版本为最大限度保存了原项目的完整性。如果要回归原始版本，以此版本比较好。
