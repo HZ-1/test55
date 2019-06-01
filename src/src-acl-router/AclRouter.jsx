@@ -7,7 +7,6 @@ import isNil from 'lodash/isNil';
 import omitRouteRenderProperties from './utils/omitRouteRenderProperties';
 import checkPermissions from './utils/checkPermissions';
 import DefaultLayout from './DefaultLayout';
-import DefaultNotFound from './DefaultNotFound';
 
 const propTypes = {
   authorities: PropTypes.oneOfType([
@@ -21,13 +20,6 @@ const propTypes = {
     component: PropTypes.func,
   })),
   normalLayout: PropTypes.func,
-  authorizedRoutes: PropTypes.arrayOf(PropTypes.shape({
-    path: PropTypes.string,
-    permissions: PropTypes.arrayOf(PropTypes.string),
-    component: PropTypes.func,
-    redirect: PropTypes.string,
-    unauthorized: PropTypes.func,
-  })),
   authorizedLayout: PropTypes.func,
   notFound: PropTypes.func,
 };
@@ -36,9 +28,7 @@ const defaultProps = {
   authorities: '',
   normalRoutes: [],
   normalLayout: DefaultLayout,
-  authorizedRoutes: [],
   authorizedLayout: DefaultLayout,
-  notFound: DefaultNotFound,
 };
 
 class AclRouter extends Component {
@@ -130,16 +120,12 @@ class AclRouter extends Component {
   }
 
   render() {
-    const { normalRoutes, authorizedRoutes } = this.props;
+    const { normalRoutes } = this.props;
     return (
       <Switch>
         {map(normalRoutes, route => (
           this.renderUnAuthorizedRoute(route)
         ))}
-        {map(authorizedRoutes, route => (
-          this.renderAuthorizedRoute(route)
-        ))}
-        {this.renderNotFoundRoute()}
       </Switch>
     );
   }

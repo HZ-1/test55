@@ -7,13 +7,13 @@ const initClient = (dispatch) => {
 
   const commonActions = [];
 
-  if (isLogin) {
-    commonActions.push(dispatch({
-      type: 'APP_LOGIN_SUCCESS',
-      payload: JSON.parse(Cookie.get('user')),
-    }));
-    commonActions.push(dispatch(appAction.getNotices()));
-  }
+  // if (isLogin) {
+  //   commonActions.push(dispatch({
+  //     type: 'APP_LOGIN_SUCCESS',
+  //     payload: JSON.parse(Cookie.get('user')),
+  //   }));
+  //   commonActions.push(dispatch(appAction.getNotices()));
+  // }
 
   return commonActions;
 };

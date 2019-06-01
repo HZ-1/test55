@@ -34,13 +34,10 @@ import { connect } from 'react-redux';
 // import AclRouter from 'react-acl-router';
 import AclRouter from 'src-acl-router';
 
-// BasicLayout是一个容器，容器暴露了一个child子组件，用来写正文
-import BasicLayout from 'layouts/BasicLayout';
 import NormalLayout from 'layouts/NormalLayout';
 import { messages, buildConfig } from '../config/buildConfig';
-//authorizedRoutes登录后根据用户权限进入的页面
 //normalRoutes 登陆页 和 主页面Outlets Management 页面
-import { authorizedRoutes, normalRoutes } from '../config/routes';
+import { normalRoutes } from '../config/routes';
 
 
 const { locale } = buildConfig;
@@ -70,11 +67,6 @@ const Router = ({ history, user }) => (
       <AclRouter
           // 当前用户的权限
         authorities={user.authorities}
-          //需要授权的路由////authorizedRoutes登录后根据用户权限进入的页面
-        authorizedRoutes={authorizedRoutes}
-          //所有授权路由的容器//----authorizedRoutes是authorizedLayout的子组件child
-          //所有的authorizedRoutes组件都会被包含到authorizedLayout
-        authorizedLayout={BasicLayout}
           //不需要授权的路由页面 //normalRoutes 登陆页 和 主页面Outlets Management 页面
         normalRoutes={normalRoutes}
           //不需要授权的路由容器//
