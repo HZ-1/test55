@@ -64,14 +64,6 @@ const logout = () => {
   });
 };
 
-const updateNotification = notification => ({
-  type: 'APP_UPDATE_NOTIFICATION',
-  payload: notification,
-});
-
-const resetNotification = () => ({
-  type: 'APP_RESET_NOTIFICATION',
-});
 
 export default {
   login,
@@ -80,6 +72,4 @@ export default {
   logout,
   getNotices,
   deleteNotice,
-  updateNotification,
-  resetNotification,
 };
