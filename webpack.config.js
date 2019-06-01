@@ -5,7 +5,6 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const pkg = require('./package.json');
-const buildConfig = require('./buildConfig');
 
 const ENV = process.env.NODE_ENV || 'development';
 //BUILD_DOMAIN 其实就是 localhost
@@ -21,8 +20,6 @@ const SOURCE_DIR = path.resolve(__dirname, 'src');
 const OUTPUT_DIR = path.resolve(__dirname, 'build');
 const CLIENT_DIR = path.join(OUTPUT_DIR, VERSION);
 
-const config = buildConfig[BUILD_DOMAIN];
-const localeMessages = require('./src/i18n/locale.json');
 
 module.exports = {
   mode: ENV,
@@ -154,9 +151,6 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV),
-      // 'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
-      'process.env.BUILD_CONFIG': JSON.stringify(config),
-      'process.env.BUILD_LOCALE_MESSAGES': JSON.stringify(localeMessages),
     }),
     new MiniCssExtractPlugin({
       filename: 'assets/css/style.[hash:8].css',

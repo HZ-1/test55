@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { injectIntl } from 'react-intl-context';
-import { injectIntl } from 'src-intl-context';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import './index.scss';
@@ -20,11 +18,11 @@ class Unauthorized extends Component {
           403
         </div>
         <div className="view-unauthorized-errorDesc">
-          {intl.formatMessage({ id: 'unauthorized_403' })}
+         11
         </div>
         <Link to="/" href="/">
           <Button type="primary">
-            {intl.formatMessage({ id: 'exception_backToHome' })}
+           11
           </Button>
         </Link>
       </div>
@@ -33,4 +31,4 @@ class Unauthorized extends Component {
 }
 
 Unauthorized.propTypes = propTypes;
-export default injectIntl(Unauthorized);
+export default Unauthorized;

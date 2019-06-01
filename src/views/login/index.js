@@ -2,19 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { withRouter } from 'react-router-dom';
-// import { injectIntl } from 'react-intl-context';
-import { injectIntl } from 'src-intl-context';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import { Input, Icon, Button } from 'antd';
 import appAction from 'app/action';
 import logo from 'assets/logo.svg';
 import './index.scss';
-import {messages,buildConfig, } from '../../app/config/buildConfig';
 
 const propTypes = {
   prefixCls: PropTypes.string,
-  intl: PropTypes.object.isRequired,
   errorMsg: PropTypes.string.isRequired,
   isLogin: PropTypes.bool.isRequired,
   loginUser: PropTypes.func.isRequired,
@@ -56,11 +52,6 @@ class Login extends Component {
     loginUser(username, password);
   }
 
-  updateLocale = (locale) => {
-    const { intl } = this.props;
-    intl.updateLocale(locale);
-  }
-
   renderErrorMsg = () => {
     const { errorMsg, prefixCls } = this.props;
     const show = !isEmpty(errorMsg);
@@ -82,16 +73,15 @@ class Login extends Component {
         <div className={`${prefixCls}-appInfo`}>
           <img className={`${prefixCls}-appLogo`} src={logo} alt="logo" />
           <span className={`${prefixCls}-appName`}>
-            {intl.formatMessage({ id: 'appName' })}
+            11
           </span>
         </div>
         <div className={`${prefixCls}-appDesc`}>
-          {intl.formatMessage({ id: 'login_appDesc' })}
+          11
         </div>
         <Input
           className={`${prefixCls}-loginInput`}
           style={{ height: 40, marginBottom: 24 }}
-          placeholder={intl.formatMessage({ id: 'login_usernameInput_placeholder' })}
           type="text"
           prefix={<Icon type="user" style={{ color: 'rgba(0, 0, 0, .25)' }} />}
           value={username}
@@ -101,7 +91,7 @@ class Login extends Component {
         />
         <Input
           className={`${prefixCls}-loginInput`}
-          placeholder={intl.formatMessage({ id: 'login_passwordInput_placeholder' })}
+          placeholder={11}
           type="password"
           prefix={<Icon type="lock" style={{ color: 'rgba(0, 0, 0, .25)' }} />}
           value={password}
@@ -113,7 +103,7 @@ class Login extends Component {
           type="primary"
           onClick={this.handleLogin}
         >
-          {intl.formatMessage({ id: 'login_login_btn' })}
+          11
         </Button>
         <div>
           {this.renderErrorMsg()}
@@ -124,16 +114,14 @@ class Login extends Component {
 
   renderIntlSwitch = () => {
     const { prefixCls, intl ,history} = this.props;
-    const { locale } = buildConfig;
 
     return (
       <div className={`${prefixCls}-intlSwitch`}>
         <span
           className={classnames({
             [`${prefixCls}-intlItem`]: true,
-            [`${prefixCls}-intlItem-active`]: intl.locale === 'en-us',
+            [`${prefixCls}-intlItem-active`]: true,
           })}
-          onClick={() => this.updateLocale('en-us')}
           role="presentation"
         >
           English
@@ -144,18 +132,14 @@ class Login extends Component {
         <span
           className={classnames({
             [`${prefixCls}-intlItem`]: true,
-            [`${prefixCls}-intlItem-active`]: intl.locale === 'zh-cn',
+            [`${prefixCls}-intlItem-active`]: true,
           })}
-          onClick={() => this.updateLocale('zh-cn')}
           role="presentation"
         >
           中文
         </span>
         <div onClick={()=>{
-          // console.log(JSON.stringify(messages));
-          // console.log(JSON.stringify(locale));
           console.log(this.props.loginUser);
-          // history.push('/kkkkk')
         }}>oooooooooo</div>
         <Acv></Acv>
       </div>
@@ -196,4 +180,4 @@ Login.defaultProps = defaultProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withRouter(injectIntl(Login)));
+)(withRouter(Login));

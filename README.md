@@ -15,11 +15,6 @@ $ yarn dev            # start webpack-dev-server in another terminal window at h
 * Admin: username `admin` & password `123`, authorities is `'admin'`
 * User: username `user` & password `123`, authorities is `'user'`
 
-以下是作者自己封装的框架
-- https://github.com/AlanWei/react-boilerplate-pro
-- https://github.com/AlanWei/react-sider
-- https://github.com/AlanWei/react-acl-router
-- https://github.com/AlanWei/react-intl-context
 
 ## 版本信息：
-版本号v1.0，此版本只有login功能，且包含了国际化功能。
+版本号v1.0，此版本只有login功能，并去除了国际化功能。
