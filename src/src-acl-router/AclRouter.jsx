@@ -3,32 +3,23 @@ import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import map from 'lodash/map';
 import isNil from 'lodash/isNil';
-//omitRouteRenderProperties用来剔除对象属性：render、component；
-import omitRouteRenderProperties from './utils/omitRouteRenderProperties';
-import checkPermissions from './utils/checkPermissions';
-import DefaultLayout from './DefaultLayout';
+import omit from 'lodash/omit';
+
+const omitRouteRenderProperties = route => (
+  omit(route, ['render', 'component'])
+);
 
 const propTypes = {
-  authorities: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.array,
-    PropTypes.func,
-  ]),
   normalRoutes: PropTypes.arrayOf(PropTypes.shape({
     path: PropTypes.string,
     redirect: PropTypes.string,
     component: PropTypes.func,
   })),
   normalLayout: PropTypes.func,
-  authorizedLayout: PropTypes.func,
-  notFound: PropTypes.func,
 };
 
 const defaultProps = {
-  authorities: '',
   normalRoutes: [],
-  normalLayout: DefaultLayout,
-  authorizedLayout: DefaultLayout,
 };
 
 class AclRouter extends Component {
@@ -39,49 +30,6 @@ class AclRouter extends Component {
       render={() => <Redirect to={route.redirect} />}
     />
   );
-
-  /**
-   * props pass to Layout & Component are history, location, match
-   */
-  renderAuthorizedRoute = (route) => {
-    const { authorizedLayout: AuthorizedLayout, authorities } = this.props;
-    const {
-      permissions,
-      path,
-      component: RouteComponent,
-      unauthorized: Unauthorized,
-    } = route;
-    const hasPermission = checkPermissions(authorities, permissions);
-    if (!hasPermission && route.unauthorized) {
-      return (
-        <Route
-          key={path}
-          {...omitRouteRenderProperties(route)}
-          render={props => (
-            <AuthorizedLayout {...props}>
-              <Unauthorized {...props} />
-            </AuthorizedLayout>
-          )}
-        />
-      );
-    }
-    if (!hasPermission && route.redirect) {
-      return this.renderRedirectRoute(route);
-    }
-
-    //<Route> 自带三个 render method:component、render、children。
-    return (
-      <Route
-        key={path}
-        {...omitRouteRenderProperties(route)}
-        render={props => (
-          <AuthorizedLayout {...props}>
-            <RouteComponent {...props} />
-          </AuthorizedLayout>
-        )}
-      />
-    );
-  }
 
   /**
    * props pass to Layout & Component are history, location, match
@@ -103,17 +51,6 @@ class AclRouter extends Component {
           <NormalLayout {...props}>
             <RouteComponent {...props} />
           </NormalLayout>
-        )}
-      />
-    );
-  }
-
-  renderNotFoundRoute = () => {
-    const { notFound: NotFound } = this.props;
-    return (
-      <Route
-        render={props => (
-          <NotFound {...props} />
         )}
       />
     );
