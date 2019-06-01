@@ -2,33 +2,9 @@
 import Login from 'views/login';
 import Outlets from 'views/outlets';//Outlets Management 页面
 import OutletDetail from 'views/outletDetail'; //Outlets Management 页面 点击进入的详情页面
-import W11orkInProgress from 'views/workInProgress'; //Dashboard（仪表盘）点击进入后的页面
 import Unauthorized from 'views/unauthorized';//403或404页面
 
 const authorizedRoutes = [{
-  path: '/dashboard/analysis/realtime',
-  exact: true,
-  //permissions 权限
-  permissions: ['admin', 'user'],
-  //redirect 当没有权限时重定向到哪个路径
-  redirect: '/login',
-  component: W11orkInProgress,
-  pageTitle: '',
-}, {
-  path: '/dashboard/analysis/offline',
-  exact: true,
-  permissions: ['admin', 'user'],
-  redirect: '/login',
-  component: W11orkInProgress,
-  pageTitle: '',
-}, {
-  path: '/dashboard/workplace',
-  exact: true,
-  permissions: ['admin'],
-  redirect: '/login',
-  component: W11orkInProgress,
-  pageTitle: '',
-}, {
   path: '/outlets',
   exact: true,
   permissions: ['admin', 'user'],
@@ -44,12 +20,6 @@ const authorizedRoutes = [{
   unauthorized: Unauthorized,
   pageTitle: 'pageTitle_outletDetail',
   breadcrumb: ['/outlets', '/outlets/:id'],
-}, {
-  path: '/exception/403',
-  exact: true,
-  permissions: ['god'],
-  component: W11orkInProgress,
-  unauthorized: Unauthorized,
 }];
 
 //这里需要定义两个路由？，绝对路径时，当登录后，重定向/outlets，

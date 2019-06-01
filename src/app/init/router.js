@@ -37,8 +37,6 @@ import AclRouter from 'src-acl-router';
 // BasicLayout是一个容器，容器暴露了一个child子组件，用来写正文
 import BasicLayout from 'layouts/BasicLayout';
 import NormalLayout from 'layouts/NormalLayout';
-//NotFound 404页面
-import NotFound from 'views/notFound';
 import { messages, buildConfig } from '../config/buildConfig';
 //authorizedRoutes登录后根据用户权限进入的页面
 //normalRoutes 登陆页 和 主页面Outlets Management 页面
@@ -81,8 +79,6 @@ const Router = ({ history, user }) => (
         normalRoutes={normalRoutes}
           //不需要授权的路由容器//
         normalLayout={NormalLayout}
-          //当路由不匹配时显示的页面//404页面
-        notFound={NotFound}
       />
     </MultiIntlProvider>
   </ConnectedRouter>
