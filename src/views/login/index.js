@@ -164,7 +164,8 @@ const mapStateToProps = state => ({
 });
 
 //查看connect源码，mapDispatchToProps 一般接收函数，但也可以接收对象，并在对象中传递dispatch，
-//当mapDispatchToProps为对象时，执行 this.props.loginUser() 会执行 appAction.loginUser()() ,主意哦，是两次()()！！
+//当mapDispatchToProps为对象时，执行 this.props.loginUser() 会执行,因为返回的是一个函数而不是一个action type对象，
+// 在redux-thunk的作用下，会继续执行返回的 dispatch=>{} 函数。
 const mapDispatchToProps = {
   loginUser: appAction.loginUser,
 };
