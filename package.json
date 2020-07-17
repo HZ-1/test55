@@ -59,7 +59,7 @@
     "connected-react-router": "^4.3.0",
     "history": "^4.6.3",
     "js-cookie": "^2.2.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.19",
     "path-to-regexp": "^2.2.1",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
